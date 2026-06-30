@@ -1,0 +1,72 @@
+# Docker 기반 Cypress 실행 구성 (선택 사항).
+# 로컬에서 'npx cypress run' 으로도 충분하며, Docker 실행이 필요할 때만 사용하세요.
+# 메일/리포트 파이프라인을 쓰려면 .env.example 을 .env 로 복사해 SMTP_*/MAIL_* 등을 채우세요.
+services:
+    # 메인 테스트: docker compose up cypress
+    cypress:
+        image: cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1
+        container_name: cypress-test
+        network_mode: host
+        environment:
+            - TZ=Asia/Seoul
+            - CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY:-}
+            - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+            - SMTP_PORT=${SMTP_PORT:-587}
+            - SMTP_USER=${SMTP_USER:-}
+            - SMTP_PASS=${SMTP_PASS:-}
+            - MAIL_FROM=${MAIL_FROM:-}
+            - MAIL_TO=${MAIL_TO:-}
+            - ENVIRONMENT=Docker
+            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/**/*.cy.js}
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: sh /app/shell/run-test.sh
+
+    # 개발/헤디드 디버깅: docker compose --profile dev up cypress-dev
+    # Dockerfile 로 빌드(Xvfb 등 포함). 네이티브 팝업이 있는 화면 디버깅용.
+    cypress-dev:
+        profiles: ["dev"]
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: cypress-dev
+        network_mode: host
+        shm_size: '2gb'
+        environment:
+            - TZ=Asia/Seoul
+            - CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY:-}
+            - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+            - SMTP_PORT=${SMTP_PORT:-587}
+            - SMTP_USER=${SMTP_USER:-}
+            - SMTP_PASS=${SMTP_PASS:-}
+            - MAIL_FROM=${MAIL_FROM:-}
+            - MAIL_TO=${MAIL_TO:-}
+            - ENVIRONMENT=Docker-Dev
+            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/**/*.cy.js}
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: sh /app/shell/run-test.sh
+
+    # 반복 실행: docker compose --profile repeat run --rm cypress-repeat
+    cypress-repeat:
+        profiles: ["repeat"]
+        image: cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1
+        container_name: cypress-repeat
+        network_mode: host
+        environment:
+            - TZ=Asia/Seoul
+            - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+            - SMTP_PORT=${SMTP_PORT:-587}
+            - SMTP_USER=${SMTP_USER:-}
+            - SMTP_PASS=${SMTP_PASS:-}
+            - MAIL_FROM=${MAIL_FROM:-}
+            - MAIL_TO=${MAIL_TO:-}
+            - ENVIRONMENT=Docker-Repeat
+            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/**/*.cy.js}
+            - REPEAT_COUNT=${REPEAT_COUNT:-3}
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: sh /app/shell/run-repeat.sh

@@ -1,0 +1,35 @@
+{
+  "name": "cypress-template",
+  "version": "1.0.0",
+  "description": "Cypress E2E 테스트 자동화 템플릿 (POM + 커스텀 커맨드 + Docker/리포트 옵션)",
+  "type": "commonjs",
+  "scripts": {
+    "open": "cypress open",
+    "test": "cypress run",
+    "test:chrome": "cypress run --browser chrome",
+    "repeat": "cypress-repeat run -n 3",
+    "report:summary": "node shell/generate-summary.mjs",
+    "docker:test": "docker compose up cypress",
+    "docker:dev": "docker compose --profile dev up cypress-dev",
+    "docker:repeat": "docker compose --profile repeat run --rm cypress-repeat"
+  },
+  "dependencies": {
+    "cypress": "^15.14.1",
+    "cypress-clipboard": "^1.0.3",
+    "cypress-iframe": "^1.0.1",
+    "cypress-real-events": "^1.15.0",
+    "cypress-repeat": "^2.3.6",
+    "cypress-xpath": "^2.0.1",
+    "dayjs": "^1.11.12",
+    "mocha": "^10.6.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@cypress/grep": "^4.1.0",
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "eslint": "^9.7.0"
+  }
+}

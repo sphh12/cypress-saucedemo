@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "lib": ["ES2020", "DOM"],
+        "module": "CommonJS",
+
+        // JS 스펙도 타입 시스템에 포함
+        "allowJs": true,
+        "checkJs": false,
+
+        // 힌트/검사만, 산출물 생성하지 않음
+        "noEmit": true,
+
+        // Node/Cypress 전역 타입 인식
+        "types": ["node", "cypress"],
+
+        // 품질/편의
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "strict": true
+    },
+    "include": ["**/*.js", "**/*.ts", "**/*.cy.js", "**/*.cy.ts", "**/*.d.ts"],
+    "exclude": ["node_modules", "dist"]
+}
