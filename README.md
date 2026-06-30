@@ -233,10 +233,11 @@ cy.login('iframeLegacy');
 
 ## 9. docs 가이드
 
-`docs/` 디렉터리에 활용 가이드 6종이 포함되어 있습니다.
+`docs/` 디렉터리에 활용 가이드 7종이 포함되어 있습니다.
 
 | 문서 | 내용 |
 |------|------|
+| [Cypress-Kitchen-Sink-Examples-Guide.md](docs/Cypress-Kitchen-Sink-Examples-Guide.md) | example.cypress.io 전 명령 카테고리 한국어 레퍼런스 + 실전 적용 가이드 |
 | [Cypress-POM-Improvement-Guide.md](docs/Cypress-POM-Improvement-Guide.md) | 대기 전략과 POM 작성 규칙 |
 | [Cypress-Troubleshooting-Guide.md](docs/Cypress-Troubleshooting-Guide.md) | iframe·셀렉터·타이밍 문제 해결 |
 | [Cypress-Browser-Alert-Handler.md](docs/Cypress-Browser-Alert-Handler.md) | alert/confirm 등 브라우저 팝업 처리 |
