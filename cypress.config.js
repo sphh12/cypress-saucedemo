@@ -4,7 +4,6 @@ const path = require('path');
 
 module.exports = defineConfig({
     chromeWebSecurity: false,
-    // projectId: 'YOUR_CYPRESS_CLOUD_PROJECT_ID', // Cypress Cloud 사용 시 주석 해제
 
     viewportWidth: 1920,
     viewportHeight: 1080,

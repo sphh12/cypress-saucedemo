@@ -12,7 +12,6 @@
 #
 # 환경변수:
 #   SPEC_FILE          실행할 스펙 (기본값: cypress/e2e/**/*.cy.js)
-#   CYPRESS_RECORD_KEY (선택) record 모드 사용 시 Cypress Cloud 키
 #   SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASS  (선택) 메일 발송 설정
 #   MAIL_FROM/MAIL_TO  (선택) 메일 발신/수신 주소
 
@@ -46,8 +45,6 @@ fi
 echo "=== Cypress 테스트 실행 ==="
 echo "실행 스펙 : $SPEC_FILE"
 
-# [record 모드 예시] CYPRESS_RECORD_KEY 가 있으면 아래 주석을 참고해 record 실행 가능
-# NO_COLOR=1 npx cypress run --record --key "$CYPRESS_RECORD_KEY" --spec "$SPEC_FILE" 2>&1 | tee ./result/orign.txt || true
 NO_COLOR=1 npx cypress run --spec "$SPEC_FILE" 2>&1 | tee ./result/orign.txt || true
 
 # Cypress 'Run Finished' 이후 요약 부분만 추출

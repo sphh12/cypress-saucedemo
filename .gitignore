@@ -187,5 +187,4 @@ myenv/
 ######################
 .env
 cypress.env.json
-credentials.json
 cypress/fixtures/testdata.json

@@ -23,11 +23,11 @@ git push <other-remote> <branch>
 | 항목 | 필수 여부 | 설명 |
 |------|-----------|------|
 | 민감정보 스캔 | **불필요** | 접근 권한이 제한되므로 스캔 생략 |
-| 민감정보 포함 | **허용** | `cypress.env.json`, `credentials.json` 등 푸시 가능 |
+| 민감정보 포함 | **허용** | `cypress.env.json` 등 푸시 가능 |
 | 환경변수 분리 | 불필요 | 하드코딩도 허용 (Private이므로) |
 | .gitignore 설정 | 권장 | 빌드 산출물, node_modules 등 제외 권장 (민감 파일은 제외하지 않음) |
 
-> **참고**: Private 저장소에서는 `cypress.env.json`, `credentials.json` 등 민감 파일을 그대로 푸시할 수 있습니다.
+> **참고**: Private 저장소에서는 `cypress.env.json` 등 민감 파일을 그대로 푸시할 수 있습니다.
 > 단, 본 템플릿은 기본적으로 `cypress.env.json`을 `.gitignore` 처리하고 `cypress.env.example.json`만 커밋하는 방식을 권장합니다.
 
 ### Public 저장소 (공개)
@@ -37,7 +37,7 @@ git push <other-remote> <branch>
 | 민감정보 스캔 | **필수** | 푸시 전 반드시 민감정보 검색 실행 |
 | 민감정보 제거 | **필수** | 누구나 접근 가능하므로 반드시 제거 |
 | 환경변수 분리 | **필수** | 모든 민감정보는 환경변수로 처리 |
-| .gitignore 설정 | **필수** | `cypress.env.json`, `credentials.json`, APK, UI 덤프 등 반드시 제외 |
+| .gitignore 설정 | **필수** | `cypress.env.json`, APK, UI 덤프 등 반드시 제외 |
 | example 파일 제공 | **필수** | 설정 방법 안내를 위한 템플릿 필수 (`cypress.env.example.json`) |
 
 > **중요**: Public 저장소에 민감정보가 한 번이라도 커밋되면, 히스토리에 영구 기록됩니다.
@@ -50,7 +50,6 @@ Private → Public 저장소로 전환 시, `.gitignore`에서 아래 항목의 
 ```gitignore
 # Private 저장소: 주석 유지 (푸시 허용)
 # Public 저장소: 주석 해제 (푸시 제외)
-credentials.json
 cypress.env.json
 cypress/fixtures/testdata.json
 ```
@@ -65,8 +64,7 @@ cypress/fixtures/testdata.json
 
 | 분류 | 파일/항목 | 예시 |
 |------|-----------|------|
-| 환경변수/로그인 | `cypress.env.json` | SMTP 비밀번호, Cypress Record Key, 로그인 계정 등 |
-| 인증 파일 | `credentials.json` | 외부 서비스 계정 키 |
+| 환경변수/로그인 | `cypress.env.json` | SMTP 비밀번호, 로그인 계정 등 |
 | 테스트 데이터 | `cypress/fixtures/testdata.json` | 테스트용 고정 데이터 |
 | 개인정보 | `cypress.env.json` > `loginEnvs` | (Private에서만, 본 템플릿에서는 권장하지 않음) |
 | 빌드 산출물 | 빌드 파일 | 산출 바이너리 |
@@ -75,7 +73,6 @@ cypress/fixtures/testdata.json
 ```gitignore
 # .gitignore (Private 저장소)
 # 민감 파일 — 주석 처리하여 푸시 허용
-# credentials.json
 # cypress.env.json
 # cypress/fixtures/testdata.json
 ```
@@ -87,7 +84,6 @@ cypress/fixtures/testdata.json
 | 분류 | .gitignore 추가 대상 | 코드 내 처리 |
 |------|----------------------|-------------|
 | 환경변수/로그인 | `cypress.env.json` | `Cypress.env('변수명')` 사용 |
-| 인증 파일 | `credentials.json` | 환경변수에서 경로 참조 |
 | 테스트 데이터 | `cypress/fixtures/testdata.json` | example 또는 CI secrets 사용 |
 | 개인정보 | — (코드에서 제거) | `Cypress.env('변수명')` 사용 |
 | 빌드 산출물 | `*.apk`, `apk/` | CI/CD에서 빌드 |
@@ -96,7 +92,6 @@ cypress/fixtures/testdata.json
 ```gitignore
 # .gitignore (Public 저장소)
 # 민감 파일 — 주석 해제하여 푸시 제외
-credentials.json
 cypress.env.json
 cypress/fixtures/testdata.json
 *.apk
@@ -175,7 +170,6 @@ node_modules/
 
 - [ ] `loginEnvs.*.username` / `loginEnvs.*.password` - 로그인 테스트 계정
 - [ ] `loginEnvs.*.compCode` - 회사/조직 코드 (사용 시)
-- [ ] `CYPRESS_RECORD_KEY` - Cypress Dashboard Record Key
 - [ ] `SMTP_USER` / `SMTP_PASS` - 메일 발송 계정
 - [ ] `MAIL_FROM` / `MAIL_TO` - 메일 발신/수신 주소
 - [ ] `SPEC_FILE` / `REPEAT_COUNT` - 실행 대상 스펙/반복 횟수

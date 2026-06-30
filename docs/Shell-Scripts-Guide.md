@@ -165,7 +165,6 @@ package.json
 |----------|-----------|------|--------|
 | `SPEC_FILE` | `run-test.sh`, `run-repeat.sh` | 실행할 스펙 경로/글롭 | `cypress/e2e/**/*.cy.js` |
 | `REPEAT_COUNT` | `run-repeat.sh` | 반복 실행 횟수 | `3` |
-| `CYPRESS_RECORD_KEY` | `run-test.sh` | Cypress Cloud 기록 키(선택) | (비움) |
 | `SMTP_HOST` | `curl.sh` | SMTP 서버 호스트 | `smtp.gmail.com` |
 | `SMTP_PORT` | `curl.sh` | SMTP 포트 | `587` |
 | `SMTP_USER` | `curl.sh` | SMTP 계정 | (비움) |

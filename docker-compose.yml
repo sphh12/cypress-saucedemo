@@ -9,7 +9,6 @@ services:
         network_mode: host
         environment:
             - TZ=Asia/Seoul
-            - CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY:-}
             - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
             - SMTP_PORT=${SMTP_PORT:-587}
             - SMTP_USER=${SMTP_USER:-}
@@ -35,7 +34,6 @@ services:
         shm_size: '2gb'
         environment:
             - TZ=Asia/Seoul
-            - CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY:-}
             - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
             - SMTP_PORT=${SMTP_PORT:-587}
             - SMTP_USER=${SMTP_USER:-}

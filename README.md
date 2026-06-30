@@ -47,7 +47,6 @@ cp cypress.env.example.json cypress.env.json
 
 # 3) 추가 픽스처 (선택)
 cp cypress/fixtures/testdata.example.json cypress/fixtures/testdata.json
-cp credentials.example.json credentials.json
 ```
 
 | Example 파일 | 생성 파일 | 필수 여부 | 용도 |
@@ -55,7 +54,6 @@ cp credentials.example.json credentials.json
 | `cypress.env.example.json` | `cypress.env.json` | **필수** | `loginEnvs`(로그인 환경)·`testdata` 주입 |
 | `.env.example` | `.env` | 선택 | SMTP/메일·리포트 파이프라인 설정 |
 | `cypress/fixtures/testdata.example.json` | `cypress/fixtures/testdata.json` | 선택 | 스펙용 더미 테스트 데이터 |
-| `credentials.example.json` | `credentials.json` | 선택 | 외부 연동(예: API) 자격 정보 |
 
 #### `cypress.env.json` 의 `loginEnvs` 채우기
 
@@ -228,7 +226,6 @@ cy.login('iframeLegacy');
 | `SMTP_HOST` / `SMTP_PORT` | SMTP 서버 호스트/포트 |
 | `SMTP_USER` / `SMTP_PASS` | SMTP 인증 계정/비밀번호(앱 비밀번호 등) |
 | `MAIL_FROM` / `MAIL_TO` | 발신/수신 메일 주소 |
-| `CYPRESS_RECORD_KEY` | (선택) Cypress Cloud 기록 키 |
 | `SPEC_FILE` | 실행할 스펙 경로(기본 `cypress/e2e/**/*.cy.js`) |
 | `REPEAT_COUNT` | 반복 실행 횟수(기본 3) |
 
