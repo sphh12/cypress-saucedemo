@@ -5,7 +5,8 @@ import AbstractBasePage from './AbstractBasePage';
 export default class DomBasePage extends AbstractBasePage {
     // 동작용 body — 일반 문서 body 를 매 호출 재취득
     body(timeout) {
-        return cy.get('body', { timeout });
+        // Cypress 15 는 timeout:undefined 를 거부하므로, 미지정 시 옵션 없이 호출한다 (인자 없는 this.body() 지원)
+        return timeout ? cy.get('body', { timeout }) : cy.get('body');
     }
 
     // 대기/검증 게이트 — body 를 매 재시도 재조회하여 콜백에 전달
