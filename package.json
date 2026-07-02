@@ -5,9 +5,10 @@
   "type": "commonjs",
   "scripts": {
     "open": "cypress open",
-    "test": "cypress run",
+    "test": "cypress run --browser chrome",
     "test:chrome": "cypress run --browser chrome",
-    "repeat": "cypress-repeat run -n 3",
+    "test:electron": "cypress run --browser electron",
+    "repeat": "cypress-repeat run -n 3 --browser chrome",
     "report:summary": "node shell/generate-summary.mjs",
     "docker:test": "docker compose up cypress",
     "docker:dev": "docker compose --profile dev up cypress-dev",

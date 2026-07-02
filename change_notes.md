@@ -1,5 +1,11 @@
 # Change Notes
 
+## 2026-07-02
+
+- **기본 실행 브라우저를 Chrome 으로 변경 + 크로스브라우저 검증**
+  - `package.json`: `test` → `cypress run --browser chrome`, `repeat` → `--browser chrome`, 내장 Electron 폴백용 `test:electron` 스크립트 추가
+  - 전체 스위트를 Chrome 149 stable 로 재실행 → 27/27 통과 (Electron 과 동일 결과, 크로스브라우저 확인)
+
 ## 2026-06-30
 
 - **saucedemo 전체 E2E 테스트 스위트 구현 완료 (POM)** — 7개 스펙 / 27개 테스트
