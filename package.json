@@ -15,7 +15,7 @@
     "docker:repeat": "docker compose --profile repeat run --rm cypress-repeat"
   },
   "dependencies": {
-    "cypress": "^15.14.1",
+    "cypress": "15.14.1",
     "cypress-clipboard": "^1.0.3",
     "cypress-iframe": "^1.0.1",
     "cypress-real-events": "^1.15.0",
