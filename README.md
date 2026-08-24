@@ -1,5 +1,8 @@
 # Cypress E2E 테스트 자동화 템플릿
 
+> **테스트 대상: Swag Labs ([saucedemo.com](https://www.saucedemo.com/))**
+> Sauce Labs가 테스트 자동화 연습용으로 공개 운영하는 데모 쇼핑몰입니다. 로그인 → 상품 목록 → 상품 상세 → 장바구니 → 체크아웃(배송정보·주문확인·완료)으로 이어지는 전자상거래 핵심 플로우를 제공하며, 정상 계정(`standard_user`) 외에 잠금 계정(`locked_out_user`), UI 결함 계정(`problem_user`), 로딩 지연 계정(`performance_glitch_user`) 등 시나리오별 공개 테스트 계정이 준비되어 있습니다. 이 저장소는 해당 사이트의 전 플로우를 **POM 기반 7개 스펙 / 27개 테스트**로 자동화합니다.
+
 ## 1. 소개
 
 이 저장소는 **Cypress 기반 웹 E2E 테스트 자동화를 빠르게 시작하기 위한 템플릿**입니다.
@@ -24,6 +27,9 @@
 ---
 
 ## 3. 빠른 시작
+
+> 📖 **처음 세팅한다면 [환경 세팅 가이드 — docs/Setup-Guide.md](docs/Setup-Guide.md)를 따라 하세요.**
+> clone → 설치(회사망 SSL 이슈 해결 포함) → 설정 파일 생성 → 스모크 테스트 검증까지 한 문서로 끝납니다. 아래는 요약본입니다.
 
 ### 사전 요구사항
 - Node.js v18 이상
@@ -112,12 +118,51 @@ npm run open
 | `test` | `cypress run` | headless 전체 실행 |
 | `test:chrome` | `cypress run --browser chrome` | Chrome 으로 headless 실행 |
 | `repeat` | `cypress-repeat run -n 3` | 동일 스펙 3회 반복 실행(불안정 테스트 점검) |
+| `test:history` | `node shell/archive-report.mjs --run` | 전체 실행 후 리포트를 히스토리로 보관(성공·실패 무관) |
 | `report:summary` | `node shell/generate-summary.mjs` | mochawesome 결과 → 한국어 요약 생성 |
+| `report:archive` | `node shell/archive-report.mjs` | 직전 실행 리포트만 히스토리로 보관 |
 | `docker:test` | `docker compose up cypress` | 컨테이너에서 테스트 실행 |
 | `docker:dev` | `docker compose --profile dev up cypress-dev` | 개발용(dev 프로파일) 컨테이너 실행 |
 | `docker:repeat` | `docker compose --profile repeat run --rm cypress-repeat` | 컨테이너에서 반복 실행(repeat 프로파일) |
 
 > 특정 스펙만 실행: `npx cypress run --spec "cypress/e2e/sample/sample.dom.cy.js"`
+
+### 실행 결과 확인
+
+| 확인 방법 | 위치 | 비고 |
+|-----------|------|------|
+| 터미널 요약 | 실행 종료 시 `(Run Finished)` 표 | 스펙별 통과/실패·소요시간 |
+| **HTML 리포트** | `cypress/reports/html/index.html` | 차트 + 실패 스크린샷 임베드. **매 실행마다 덮어쓰기** |
+| 스크린샷 | `cypress/screenshots/` | 실패 시에만 자동 생성 |
+| 비디오 | `cypress/videos/` | 녹화 후 **성공한 스펙은 자동 삭제**, 실패만 보존 |
+| GUI 타임 트래블 | `npm run open` | 커맨드 단계별 DOM 스냅샷(디버깅용) |
+
+### 실행 이력(히스토리) 보관
+
+HTML 리포트는 덮어쓰기되므로 과거 실행 결과를 남기려면 히스토리 보관을 사용합니다.
+
+```bash
+npm run test:history      # 전체 실행 + 결과 보관 (권장)
+npm run report:archive    # 이미 실행한 리포트만 보관
+```
+
+`cypress-history/<날짜_시각>/` 폴더에 리포트 전체(HTML·비디오)가 복사됩니다. `test:history`(직접 실행) 모드에서는 폴더명 뒤에 결과가 붙어 실패한 실행을 바로 골라낼 수 있습니다.
+
+```
+cypress-history/
+├── 2026-08-24_153012_pass/index.html   # test:history — 통과
+├── 2026-08-24_161540_fail/index.html   # test:history — 실패
+└── 2026-08-24_170233/index.html        # report:archive — 결과를 알 수 없어 시각만
+```
+
+| 환경변수 | 기본값 | 설명 |
+|----------|--------|------|
+| `HISTORY_DIR` | `./cypress-history` | 보관 위치 변경 |
+| `HISTORY_KEEP` | (미지정 = 전부 유지) | 최근 N개만 유지하고 오래된 것 자동 삭제 |
+
+> `HISTORY_KEEP`은 통과·실패를 **한 묶음으로** 세므로, 실패가 연달아 쌓이면 과거 통과 기록이 밀려 삭제될 수 있습니다. 기준선을 남겨야 하면 해당 폴더를 다른 이름(예: `baseline_v1`)으로 바꿔두면 정리 대상에서 제외됩니다.
+
+> 이 폴더는 `.gitignore` 처리되어 커밋되지 않습니다. 실행 간 추이 그래프·flaky 감지가 필요하면 Allure 리포터 도입을 검토하세요(mochawesome 자체에는 비교 기능이 없습니다).
 
 ---
 
@@ -243,4 +288,4 @@ cy.login('iframeLegacy');
 | [Cypress-Browser-Alert-Handler.md](docs/Cypress-Browser-Alert-Handler.md) | alert/confirm 등 브라우저 팝업 처리 |
 | [Shell-Scripts-Guide.md](docs/Shell-Scripts-Guide.md) | shell 스크립트 역할·호출 관계 |
 | [cypress_shortKey.md](docs/cypress_shortKey.md) | 자주 쓰는 명령 치트시트 |
-| [Mac-Dev-Setup-Guide.md](docs/Mac-Dev-Setup-Guide.md) | macOS 개발환경 셋업 |
+| [Setup-Guide.md](docs/Setup-Guide.md) | 환경 세팅 통합 가이드 (설치·설정 파일·검증·macOS·트러블슈팅) |

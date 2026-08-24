@@ -17,6 +17,7 @@
 | `visualization.js` | 변환 | Cypress 실행 결과 → 이메일 본문용 HTML 표 |
 | `curl.sh` | 발송 | SMTP로 결과 메일 발송 |
 | `generate-summary.mjs` | 요약 | mochawesome JSON → 한국어 요약 텍스트 |
+| `archive-report.mjs` | 보관 | HTML 리포트를 타임스탬프 폴더로 복사(실행 이력 누적) |
 
 ---
 
@@ -120,6 +121,23 @@
 
 ---
 
+### archive-report.mjs (실행 이력 보관)
+
+| 항목 | 내용 |
+|------|------|
+| 용도 | 매 실행마다 덮어써지는 HTML 리포트를 타임스탬프 폴더로 복사해 과거 이력을 누적 |
+| 호출 | npm 스크립트 `test:history`(실행+보관) / `report:archive`(보관만) |
+| 입력 | `cypress/reports/html/` (리포트 폴더 전체 — HTML·비디오 포함) |
+| 출력 | `<HISTORY_DIR>/<날짜_시각>[_pass\|_fail]/` |
+
+**특징:**
+- `--run` 옵션을 주면 테스트를 직접 실행하고, **실패해도 보관**한 뒤 cypress 종료 코드를 그대로 전파합니다(CI 호환).
+- `--run` 뒤의 인자는 cypress 로 그대로 전달됩니다. `--browser` 를 생략하면 `npm test` 와 동일하게 chrome 을 씁니다.
+- 폴더명 상태 접미사(`_pass`/`_fail`)는 `--run` 모드에서만 붙습니다(보관 전용 모드는 결과를 알 수 없으므로 시각만).
+- **안전장치**: ① 이번 실행이 리포트를 만들지 않았으면(실행 실패·스펙 0건) 직전 리포트를 오인 보관하지 않고 건너뜁니다. ② `.partial` 로 복사한 뒤 rename 하므로 복사 중 실패한 반쪽 폴더가 정상 이력으로 남지 않습니다. ③ 정리(`HISTORY_KEEP`) 대상은 폴더명 형식이 맞고 `index.html` 이 있는 폴더로 제한해 다른 도구·사용자 폴더를 지우지 않습니다. ④ 삭제가 실패해도(Windows 파일 점유 등) 경고만 남기고 통과한 실행을 실패로 만들지 않습니다.
+
+---
+
 ## 호출 관계도
 
 ```
@@ -137,7 +155,11 @@ docker-compose.yml
               └── (선택) curl.sh           → 이메일 발송
 
 package.json
-  └── report:summary → generate-summary.mjs (mochawesome JSON → 한국어 요약)
+  ├── report:summary → generate-summary.mjs (mochawesome JSON → 한국어 요약)
+  ├── test:history   → archive-report.mjs --run
+  │                      ├── node node_modules/cypress/bin/cypress run …
+  │                      └── cypress/reports/html/ → <HISTORY_DIR>/<시각>_pass|fail/
+  └── report:archive → archive-report.mjs (직전 리포트만 보관)
 ```
 
 ---
@@ -149,7 +171,9 @@ package.json
 | `npm test` | `cypress run` | (shell 불필요) |
 | `npm run test:chrome` | `cypress run --browser chrome` | (shell 불필요) |
 | `npm run repeat` | `cypress-repeat run -n 3` | (shell 불필요) |
+| `npm run test:history` | `node shell/archive-report.mjs --run` | `archive-report.mjs` |
 | `npm run report:summary` | `node shell/generate-summary.mjs` | `generate-summary.mjs` |
+| `npm run report:archive` | `node shell/archive-report.mjs` | `archive-report.mjs` |
 | `npm run docker:test` | `docker compose up cypress` | `run-test.sh` |
 | `npm run docker:dev` | `docker compose --profile dev up cypress-dev` | `run-test.sh` |
 | `npm run docker:repeat` | `docker compose --profile repeat run --rm cypress-repeat` | `run-repeat.sh` |
@@ -172,6 +196,8 @@ package.json
 | `MAIL_FROM` | `curl.sh` | 발신 주소 | (비움) |
 | `MAIL_TO` | `curl.sh` | 수신 주소 | (비움) |
 | `ENVIRONMENT` | `run-test.sh`, `run-repeat.sh` | 이메일 제목 등에 표시할 실행 환경 이름 | `Docker` |
+| `HISTORY_DIR` | `archive-report.mjs` | 실행 이력 보관 위치 | `./cypress-history` |
+| `HISTORY_KEEP` | `archive-report.mjs` | 최근 N개만 유지(오래된 것 삭제) | (미지정 = 전부 유지) |
 
 ---
 

@@ -169,6 +169,8 @@ cypress/reports/
 cypress/diag-log.txt
 # 리포트/요약 산출물 (shell 파이프라인)
 result/
+# 실행 결과 히스토리 보관 폴더 (shell/archive-report.mjs)
+cypress-history/
 
 ######################
 # Node.js

@@ -12,6 +12,30 @@
 - [ ] (선택) `cy.session` 기반 로그인 캐싱 도입 검토 (P10 — 동작 변경이라 별도 검토)
 - [ ] (선택) problem_user / performance_glitch_user 시나리오 스펙 추가
 
+## [2026-08-24]
+
+### Added
+
+- **실행 결과 히스토리 보관 기능 추가** — `shell/archive-report.mjs`
+  - mochawesome 리포트가 매 실행 덮어쓰기되어 직전 결과만 남는 문제 대응
+  - `cypress-history/<날짜_시각>[_pass|_fail]/`에 리포트 전체(HTML·비디오) 복사
+  - npm script: `test:history`(실행+보관) / `report:archive`(보관만) 추가
+  - 테스트 **실패 시에도 보관**하고 cypress 종료 코드를 그대로 전파(CI 호환)
+  - `HISTORY_DIR`(위치)·`HISTORY_KEEP`(보관 개수) 환경변수 지원, `cypress-history/` gitignore 등록
+  - Windows Node 20+ 에서 `.cmd` 래퍼 spawn 이 차단(EINVAL)되는 문제 대응 — `npx` 대신 `createRequire` 로 cypress CLI 를 해석해 `process.execPath` 로 직접 실행
+  - **코드 리뷰 반영(적대적 리뷰 8건 중 5건 수정)**: ① 이번 실행이 리포트를 만들지 않았을 때 직전 리포트를 결과로 오인 보관하던 문제(mtime 검사로 차단) ② 보관 실패 시 통과로 보고하던 종료 코드 ③ 인자를 넘기면 `--browser chrome` 기본값이 사라져 Electron 으로 실행되던 문제 ④ 복사 중 실패한 반쪽 폴더가 정상 이력으로 남던 문제(`.partial` → rename) ⑤ 이력 삭제 실패(Windows 파일 점유)가 통과한 실행을 실패로 만들던 문제
+  - 정리(`HISTORY_KEEP`) 대상을 "폴더명 형식 일치 + `index.html` 존재"로 제한 — 다른 도구·사용자 폴더 삭제 방지
+- **`docs/Shell-Scripts-Guide.md` 갱신** — `archive-report.mjs` 항목·호출 관계도·npm 대응표·환경변수 표 추가
+- **`docs/Setup-Guide.md` 신설 — 환경 세팅 통합 가이드**
+  - clone → 설치 → 설정 파일 생성 → 스모크 테스트 검증까지 단일 문서로 통합
+  - 회사망 SSL 인터셉트로 인한 Cypress 바이너리 다운로드 실패 해결 절차(실측) 수록
+  - 구 `docs/Mac-Dev-Setup-Guide.md` 내용을 macOS 절로 흡수 후 원본 삭제 (참조 1건 갱신)
+
+### Changed
+
+- `README.md`: 서두에 테스트 대상 사이트(Swag Labs/saucedemo) 소개 추가, 빠른 시작 절에 Setup-Guide 링크 추가, docs 표 갱신
+- `package.json`: cypress `^15.14.1` → `15.14.1` 정확 고정 (회사망에서 캐시 바이너리와 버전 일치 보장, 커밋 181ecb4)
+
 ## [2026-07-02]
 
 ### Changed

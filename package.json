@@ -9,7 +9,9 @@
     "test:chrome": "cypress run --browser chrome",
     "test:electron": "cypress run --browser electron",
     "repeat": "cypress-repeat run -n 3 --browser chrome",
+    "test:history": "node shell/archive-report.mjs --run",
     "report:summary": "node shell/generate-summary.mjs",
+    "report:archive": "node shell/archive-report.mjs",
     "docker:test": "docker compose up cypress",
     "docker:dev": "docker compose --profile dev up cypress-dev",
     "docker:repeat": "docker compose --profile repeat run --rm cypress-repeat"
