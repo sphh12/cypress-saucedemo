@@ -6,5 +6,9 @@
 shell/*.js text eol=lf
 shell/*.mjs text eol=lf
 
+# Force LF for CI workflow files (GitHub Actions 러너는 Linux)
+*.yml text eol=lf
+*.yaml text eol=lf
+
 # Default behavior for other files
 * text=auto

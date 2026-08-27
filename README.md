@@ -164,6 +164,19 @@ cypress-history/
 
 > 이 폴더는 `.gitignore` 처리되어 커밋되지 않습니다. 실행 간 추이 그래프·flaky 감지가 필요하면 Allure 리포터 도입을 검토하세요(mochawesome 자체에는 비교 기능이 없습니다).
 
+
+### CI (GitHub Actions)
+
+`main` 푸시 / PR / 수동 실행 / **매일 KST 03:17 야간 회귀** 시 전체 스위트가 자동 실행되고,
+HTML 리포트와 실패 산출물이 아티팩트로 30일간 보관됩니다 (CI 에서만 실패 시 2회 재시도).
+
+```bash
+gh workflow run cypress.yml   # 수동 실행
+gh run list --limit 5         # 최근 실행 상태 확인
+```
+
+자세한 내용은 [docs/ci-guide.md](docs/ci-guide.md) 참고.
+
 ---
 
 ## 5. 프로젝트 구조
@@ -190,8 +203,9 @@ cypress_template/
 │   └── support/
 │       ├── commands.js                # 커스텀 커맨드
 │       └── e2e.js                     # 전역 설정
+├── .github/workflows/cypress.yml      # GitHub Actions CI (야간 회귀)
 ├── shell/                             # 메일/리포트 파이프라인(선택)
-├── docs/                              # 가이드 문서 6종
+├── docs/                              # 가이드 문서 8종
 ├── docker-compose.yml                 # cypress / cypress-dev / cypress-repeat
 ├── Dockerfile
 ├── cypress.config.js
@@ -278,7 +292,7 @@ cy.login('iframeLegacy');
 
 ## 9. docs 가이드
 
-`docs/` 디렉터리에 활용 가이드 7종이 포함되어 있습니다.
+`docs/` 디렉터리에 활용 가이드 8종이 포함되어 있습니다.
 
 | 문서 | 내용 |
 |------|------|
@@ -289,3 +303,4 @@ cy.login('iframeLegacy');
 | [Shell-Scripts-Guide.md](docs/Shell-Scripts-Guide.md) | shell 스크립트 역할·호출 관계 |
 | [cypress_shortKey.md](docs/cypress_shortKey.md) | 자주 쓰는 명령 치트시트 |
 | [Setup-Guide.md](docs/Setup-Guide.md) | 환경 세팅 통합 가이드 (설치·설정 파일·검증·macOS·트러블슈팅) |
+| [ci-guide.md](docs/ci-guide.md) | GitHub Actions CI (트리거 4종·야간 회귀·아티팩트·YAML 검증) |

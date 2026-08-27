@@ -12,6 +12,26 @@
 - [ ] (선택) `cy.session` 기반 로그인 캐싱 도입 검토 (P10 — 동작 변경이라 별도 검토)
 - [ ] (선택) problem_user / performance_glitch_user 시나리오 스펙 추가
 
+## [2026-08-27]
+
+### Added
+
+- **GitHub Actions 데일리 회귀 CI 구축** — `.github/workflows/cypress.yml`
+  - 트리거 4종: `main` push / PR / `workflow_dispatch`(수동) / `schedule`
+  - 야간 회귀: `cron: '17 18 * * *'` = UTC 18:17 = **KST 03:17** (정시는 GitHub 부하로 지연되므로 비정시)
+  - CI 에서만 실패 시 2회 재시도(`--config retries=2`) — 실행 인자라 로컬 `npm test` 동작은 불변
+  - HTML 리포트 + 실패 스크린샷을 아티팩트로 업로드(`if: !cancelled()`, 보관 30일)
+  - Cypress 바이너리 캐시를 `npm ci` 앞에 배치 — 순서가 바뀌면 매 실행 ~300MB 재다운로드
+  - 시크릿 불필요: 환경값이 전부 saucedemo 공개 데모값이라 `cypress.env.example.json` 복사로 해결
+  - 커밋 전 2겹 검증(YAML 파싱 + actionlint 스키마) 수행 — 콜론 미인용으로 워크플로가 통째로 무효화되는 사고 방지
+- **`docs/ci-guide.md` 신설** — 트리거·동작 흐름·리포트 확인·확장(매트릭스·concurrency)·YAML 검증 절차
+
+### Changed
+
+- `.gitignore`: `package-lock.json` 제외 규칙 제거 → lockfile 커밋 (CI 에서 `npm ci` 로 재현 설치·캐시 활용)
+- `.gitattributes`: `*.yml`·`*.yaml` 을 LF 로 고정 (CI 러너는 Linux)
+- `README.md`: 실행 절에 CI 안내 추가, docs 표에 `ci-guide.md` 추가(7종 → 8종)
+
 ## [2026-08-24]
 
 ### Added
