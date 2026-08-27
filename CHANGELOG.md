@@ -24,13 +24,17 @@
   - Cypress 바이너리 캐시를 `npm ci` 앞에 배치 — 순서가 바뀌면 매 실행 ~300MB 재다운로드
   - 시크릿 불필요: 환경값이 전부 saucedemo 공개 데모값이라 `cypress.env.example.json` 복사로 해결
   - 커밋 전 2겹 검증(YAML 파싱 + actionlint 스키마) 수행 — 콜론 미인용으로 워크플로가 통째로 무효화되는 사고 방지
+  - 회귀 대상은 `--spec` 으로 saucedemo 스위트(7 스펙 / 27 테스트)로 한정 — `sample/`(미설정 플레이스홀더, 로컬에서도 실패)·`example/`(외부 사이트 학습 예제) 제외
+  - 첫 런(Chrome 151 / Node 22)에서 위 사전 문제가 드러나 스코프를 조정함 — saucedemo 27개는 첫 런에서도 전부 통과
+  - 액션은 최신 메이저 사용(checkout v7 · setup-node v7 · cache v6 · upload-artifact v7) — Node 20 deprecation 경고 제거
 - **`docs/ci-guide.md` 신설** — 트리거·동작 흐름·리포트 확인·확장(매트릭스·concurrency)·YAML 검증 절차
 
 ### Changed
 
 - `.gitignore`: `package-lock.json` 제외 규칙 제거 → lockfile 커밋 (CI 에서 `npm ci` 로 재현 설치·캐시 활용)
 - `.gitattributes`: `*.yml`·`*.yaml` 을 LF 로 고정 (CI 러너는 Linux)
-- `README.md`: 실행 절에 CI 안내 추가, docs 표에 `ci-guide.md` 추가(7종 → 8종)
+- `README.md`: 실행 절에 CI 안내 추가, docs 표에 `ci-guide.md` 추가(7종 → 8종), 구조 트리에 `.github/` 반영
+- `cypress.config.js`: Cypress 15.4.0 에서 제거된 `experimentalStudio` 옵션 삭제 (매 실행 경고 출력)
 
 ## [2026-08-24]
 

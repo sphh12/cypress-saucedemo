@@ -28,8 +28,23 @@ gh run rerun <런ID> --failed       # 실패한 job 만 재실행
 1. push / PR / 수동 실행 / 스케줄 중 하나로 워크플로 시작
 2. Node 22 설치(+npm 캐시) → **Cypress 바이너리 캐시 복원** → `npm ci` → `npx cypress verify`
 3. `cp cypress.env.example.json cypress.env.json` — 로그인 프로필·테스트데이터 주입 파일 생성
-4. `npx cypress run --browser chrome --config retries=2` 실행 — CI 에서만 실패 시 2회 재시도 (플레이키 완화)
+4. `npx cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js" --config retries=2` 실행
+   — CI 에서만 실패 시 2회 재시도 (플레이키 완화)
 5. 성공/실패와 무관하게 `cypress/reports/html/` + `cypress/screenshots/` 를 아티팩트로 업로드 (보관 30일)
+
+### 회귀 대상 스코프
+
+`cypress.config.js` 의 `specPattern` 은 `cypress/e2e/**/*.cy.js` 라서 전체 20 스펙이 잡히지만,
+CI 는 `--spec` 으로 **saucedemo 스위트(7 스펙 / 27 테스트)만** 돌린다. 나머지는 템플릿 잔여물이다.
+
+| 경로 | 성격 | CI 포함 |
+|------|------|:------:|
+| `cypress/e2e/saucedemo/` | 이 프로젝트의 실제 E2E 스위트 | ✅ |
+| `cypress/e2e/sample/` | 대상 앱이 설정되지 않은 플레이스홀더 스텁 — **로컬에서도 실패한다** | ❌ |
+| `cypress/e2e/example/` | example.cypress.io 를 치는 Kitchen Sink 학습 예제 (외부 사이트) | ❌ |
+
+> `npm test` 는 여전히 20 스펙 전체를 돌리므로 sample 2건이 실패한다.
+> 로컬에서 실제 스위트만 확인하려면 `npx cypress run --spec "cypress/e2e/saucedemo/**/*.cy.js"` 를 쓴다.
 
 ### 왜 이런 순서인가
 

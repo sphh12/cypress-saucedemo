@@ -9,7 +9,6 @@ module.exports = defineConfig({
     viewportHeight: 1080,
     pageLoadTimeout: 60000,
 
-    experimentalStudio: true,
     video: true,
 
     reporter: 'cypress-mochawesome-reporter',
