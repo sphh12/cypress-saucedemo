@@ -11,6 +11,7 @@
 - [ ] (선택) `Test.allTheThings() T-Shirt` 등 특수문자 slug 상품 케이스 추가
 - [ ] (선택) `cy.session` 기반 로그인 캐싱 도입 검토 (P10 — 동작 변경이라 별도 검토)
 - [ ] (선택) problem_user / performance_glitch_user 시나리오 스펙 추가
+- [ ] `npm test` 스코프 방침 결정 — `sample/`(대상 앱 미설정 플레이스홀더)·`example/`(Kitchen Sink 학습 예제) 때문에 전체 실행(20 스펙)이 항상 실패한다. `specPattern` 변경 / 해당 스펙 삭제 / 현상 유지 중 택일 (CI 는 `--spec` 으로 이미 우회함)
 
 ## [2026-08-27]
 
