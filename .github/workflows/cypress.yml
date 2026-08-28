@@ -1,6 +1,6 @@
 # Cypress E2E 테스트 CI — push/PR/수동 실행/야간 회귀 시 전체 테스트를 돌린 뒤
 # HTML 리포트와 실패 산출물(스크린샷·비디오)을 아티팩트로 업로드한다.
-name: "cypress-saucedemo"
+name: "cypress - saucedemo"
 
 on:
   push:

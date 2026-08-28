@@ -18,7 +18,7 @@
 ### Changed
 
 - **저장소명 변경: `cypress_swagLabs` → `cypress-saucedemo`** (GitHub 리네임 + 로컬 리모트 URL 갱신)
-  - 워크플로 표시명: `"Cypress E2E - Swag Labs"` → `"cypress-saucedemo"`
+  - 워크플로 표시명: `"Cypress E2E - Swag Labs"` → `"cypress - saucedemo"` (저장소명은 `cypress-saucedemo`)
   - `package.json`: `name` `cypress-template` → `cypress-saucedemo`, `description` 를 실제 프로젝트 내용으로 갱신
     (템플릿 시절 값이 남아 있었음). `package-lock.json` 도 함께 동기화 — 불일치 시 CI 의 `npm ci` 가 실패한다
   - `docs/Setup-Guide.md`: clone 주소·`cd` 경로 갱신
