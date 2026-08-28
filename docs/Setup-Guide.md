@@ -141,7 +141,8 @@ npm run test:history      # 실행 후 성공·실패 무관하게 보관 (권�
 npm run report:archive    # 이미 실행한 리포트만 보관
 ```
 
-`cypress-history/<날짜_시각>/`에 리포트 전체가 복사됩니다(`.gitignore` 처리됨). `test:history`는 폴더명 뒤에 `_pass`/`_fail`을 붙여 실패한 실행을 바로 골라낼 수 있고, `report:archive`는 결과를 알 수 없으므로 시각만 붙습니다. 특정 스펙만 실행하려면 `--` 뒤에 cypress 옵션을 붙입니다:
+`cypress-history/<날짜_시각>/`에 리포트 전체가 복사됩니다(`.gitignore` 처리됨). `test:history`는 폴더명 뒤에 `_pass`/`_fail`을 붙여 실패한
+실행을 바로 골라낼 수 있고, `report:archive`는 결과를 알 수 없으므로 시각만 붙습니다. 특정 스펙만 실행하려면 `--` 뒤에 cypress 옵션을 붙입니다:
 
 ```bash
 npm run test:history -- --spec "cypress/e2e/saucedemo/cart.cy.js"
