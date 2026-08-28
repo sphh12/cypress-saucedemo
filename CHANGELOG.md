@@ -25,6 +25,12 @@
   - `docs/Setup-Guide.md`: clone 주소·`cd` 경로 갱신
   - `README.md`: 구조 트리 루트 `cypress_template/` → `cypress-saucedemo/`
   - 워크플로 파일명은 `cypress.yml` 유지 (문서 3곳의 `gh workflow run cypress.yml` 명령과 일치)
+- **문서 줄 길이 정리** — 직접 작성한 6곳(142~323자)을 110자 기준으로 분리
+  (README 2 / CHANGELOG 2 / Setup-Guide 1 / Shell-Scripts-Guide 1), README 연속 빈 줄 1건 제거
+  - 렌더링이 깨지는 지점은 없었음 — GitHub 마크다운 API 로 표·코드블록·리스트를 실측 확인
+  - 저장소 `.md` 는 개행을 `<br>` 로 바꾸지 않으므로(실측 `<br>` 0개) 줄바꿈이 표시에 영향을 주지 않는다.
+    커밋본 대비 렌더링 HTML 완전 일치 확인
+  - 기존 문서(특히 Kitchen-Sink 가이드 86줄)의 긴 줄은 대량 diff 를 피하려 손대지 않음
 
 ## [2026-08-27]
 
