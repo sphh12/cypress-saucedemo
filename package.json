@@ -1,7 +1,7 @@
 {
-  "name": "cypress-template",
+  "name": "cypress-saucedemo",
   "version": "1.0.0",
-  "description": "Cypress E2E 테스트 자동화 템플릿 (POM + 커스텀 커맨드 + Docker/리포트 옵션)",
+  "description": "Swag Labs(saucedemo.com) E2E 테스트 자동화 — Cypress + POM (7 스펙 / 27 테스트)",
   "type": "commonjs",
   "scripts": {
     "open": "cypress open",

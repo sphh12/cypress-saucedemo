@@ -13,6 +13,18 @@
 - [ ] (선택) problem_user / performance_glitch_user 시나리오 스펙 추가
 - [ ] `npm test` 스코프 방침 결정 — `sample/`(대상 앱 미설정 플레이스홀더)·`example/`(Kitchen Sink 학습 예제) 때문에 전체 실행(20 스펙)이 항상 실패한다. `specPattern` 변경 / 해당 스펙 삭제 / 현상 유지 중 택일 (CI 는 `--spec` 으로 이미 우회함)
 
+## [2026-08-28]
+
+### Changed
+
+- **저장소명 변경: `cypress_swagLabs` → `cypress-saucedemo`** (GitHub 리네임 + 로컬 리모트 URL 갱신)
+  - 워크플로 표시명: `"Cypress E2E - Swag Labs"` → `"cypress-saucedemo"`
+  - `package.json`: `name` `cypress-template` → `cypress-saucedemo`, `description` 를 실제 프로젝트 내용으로 갱신
+    (템플릿 시절 값이 남아 있었음). `package-lock.json` 도 함께 동기화 — 불일치 시 CI 의 `npm ci` 가 실패한다
+  - `docs/Setup-Guide.md`: clone 주소·`cd` 경로 갱신
+  - `README.md`: 구조 트리 루트 `cypress_template/` → `cypress-saucedemo/`
+  - 워크플로 파일명은 `cypress.yml` 유지 (문서 3곳의 `gh workflow run cypress.yml` 명령과 일치)
+
 ## [2026-08-27]
 
 ### Added

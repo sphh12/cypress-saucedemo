@@ -24,8 +24,8 @@
 ## 2. 클론 및 의존성 설치
 
 ```bash
-git clone https://github.com/sphh12/cypress_swagLabs.git
-cd cypress_swagLabs
+git clone https://github.com/sphh12/cypress-saucedemo.git
+cd cypress-saucedemo
 npm install
 ```
 

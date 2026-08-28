@@ -182,7 +182,7 @@ gh run list --limit 5         # 최근 실행 상태 확인
 ## 5. 프로젝트 구조
 
 ```
-cypress_template/
+cypress-saucedemo/
 ├── cypress/
 │   ├── e2e/
 │   │   ├── sample/
