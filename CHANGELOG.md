@@ -19,8 +19,13 @@
 ### Changed
 
 - **저장소명 변경: `cypress_swagLabs` → `cypress-saucedemo`** (GitHub 리네임 + 로컬 리모트 URL 갱신)
-  - 워크플로 표시명: `"Cypress E2E - Swag Labs"` → `"cypress - saucedemo"` → `"[Daily] Regression Test"`
-    (저장소명은 `cypress-saucedemo`). `[` 로 시작하는 값은 YAML 이 배열로 해석하므로 따옴표 필수
+  - 워크플로 이름: `"Cypress E2E - Swag Labs"` → `"cypress - saucedemo"` (저장소명은 `cypress-saucedemo`)
+  - `run-name` 추가 — Actions 목록의 **런 표시명**을 이벤트별로 지정:
+    schedule → `[Daily] Regression Test`, workflow_dispatch → `[Manual] Regression Test — <actor>`,
+    push/PR → 빈 문자열이라 GitHub 기본값(커밋 메시지)이 그대로 표시된다
+    (워크플로 이름과 런 표시명은 서로 다른 값이다 — 목록 굵은 제목은 후자)
+  - `[` 로 시작하는 값은 YAML 이 배열로 해석하므로 따옴표 필수. 여러 줄 표현식은 `>-` 폴딩 시
+    들여쓰기를 통일해야 개행이 공백으로 접힌다(들여쓰기가 다르면 문자열에 개행이 남는다)
   - `package.json`: `name` `cypress-template` → `cypress-saucedemo`, `description` 를 실제 프로젝트 내용으로 갱신
     (템플릿 시절 값이 남아 있었음). `package-lock.json` 도 함께 동기화 — 불일치 시 CI 의 `npm ci` 가 실패한다
   - `docs/Setup-Guide.md`: clone 주소·`cd` 경로 갱신

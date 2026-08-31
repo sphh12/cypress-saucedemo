@@ -1,6 +1,15 @@
 # Cypress E2E 테스트 CI — push/PR/수동 실행/야간 회귀 시 전체 테스트를 돌린 뒤
 # HTML 리포트와 실패 산출물(스크린샷·비디오)을 아티팩트로 업로드한다.
-name: "[Daily] Regression Test"
+name: "cypress - saucedemo"
+
+# Actions 탭 목록에 표시되는 "런 이름". 지정하지 않으면 GitHub 이 이벤트별 기본값
+# (push 는 커밋 메시지, schedule 은 워크플로 이름)으로 채운다.
+# 결과가 빈 문자열이면 그 기본값으로 대체되므로, 스케줄·수동 실행만 라벨을 붙이고
+# push/PR 은 커밋 메시지가 그대로 보이도록 빈 문자열을 반환한다.
+run-name: >-
+  ${{ github.event_name == 'schedule' && '[Daily] Regression Test'
+  || github.event_name == 'workflow_dispatch' && format('[Manual] Regression Test — {0}', github.actor)
+  || '' }}
 
 on:
   push:
