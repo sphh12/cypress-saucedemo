@@ -5,7 +5,7 @@
 > 오래된 이력(6개월 이상)은 `archive/CHANGELOG-<범위>.md`로 분리한다 (현재는 분량이 적어 아카이브 없음).
 > (구 `change_notes.md` + `Todo.md`를 2026-08-24 이 파일로 통합 — 원문 무손실)
 
-## [Unreleased]
+## Todo
 
 - [ ] (선택) `report:summary` 가 mochawesome JSON 을 보존하도록 설정 보완 (현재 HTML 리포트는 정상)
 - [ ] (선택) `Test.allTheThings() T-Shirt` 등 특수문자 slug 상품 케이스 추가
