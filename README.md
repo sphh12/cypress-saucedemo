@@ -118,15 +118,17 @@ npm run open
 | npm script | 실행 명령 | 설명 |
 |-----------|-----------|------|
 | `open` | `cypress open` | Cypress GUI(런처) 실행 |
-| `test` | `cypress run` | headless 전체 실행 |
-| `test:chrome` | `cypress run --browser chrome` | Chrome 으로 headless 실행 |
-| `repeat` | `cypress-repeat run -n 3` | 동일 스펙 3회 반복 실행(불안정 테스트 점검) |
-| `test:history` | `node shell/archive-report.mjs --run` | 전체 실행 후 리포트를 히스토리로 보관(성공·실패 무관) |
+| `test` | `cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | saucedemo 스위트 headless 실행 (CI 와 동일 범위) |
+| `test:chrome` | `cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | Chrome 으로 headless 실행 |
+| `repeat` | `cypress-repeat run -n 3 --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | 동일 스펙 3회 반복 실행(불안정 테스트 점검) |
+| `test:history` | `node shell/archive-report.mjs --run --spec "cypress/e2e/saucedemo/**/*.cy.js"` | 실행 후 리포트를 히스토리로 보관(성공·실패 무관) |
 | `report:summary` | `node shell/generate-summary.mjs` | mochawesome 결과 → 한국어 요약 생성 |
 | `report:archive` | `node shell/archive-report.mjs` | 직전 실행 리포트만 히스토리로 보관 |
 | `docker:test` | `docker compose up cypress` | 컨테이너에서 테스트 실행 |
 | `docker:dev` | `docker compose --profile dev up cypress-dev` | 개발용(dev 프로파일) 컨테이너 실행 |
 | `docker:repeat` | `docker compose --profile repeat run --rm cypress-repeat` | 컨테이너에서 반복 실행(repeat 프로파일) |
+
+> 실행 스크립트는 기본 범위가 **saucedemo 스위트**다. 다른 스펙은 뒤에 `--spec` 을 붙이면 기본값을 덮어쓴다 (마지막 `--spec` 우선) — 예: `npm test -- --spec "cypress/e2e/sample/sample.dom.cy.js"`
 
 > 특정 스펙만 실행: `npx cypress run --spec "cypress/e2e/sample/sample.dom.cy.js"`
 
@@ -145,7 +147,7 @@ npm run open
 HTML 리포트는 덮어쓰기되므로 과거 실행 결과를 남기려면 히스토리 보관을 사용합니다.
 
 ```bash
-npm run test:history      # 전체 실행 + 결과 보관 (권장)
+npm run test:history      # saucedemo 스위트 실행 + 결과 보관 (권장)
 npm run report:archive    # 이미 실행한 리포트만 보관
 ```
 

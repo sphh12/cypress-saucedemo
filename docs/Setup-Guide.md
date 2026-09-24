@@ -122,10 +122,10 @@ npx cypress run --spec "cypress/e2e/saucedemo/purchase.basic.cy.js" --browser ch
 | npm script | 실행 명령 | 설명 |
 |-----------|-----------|------|
 | `npm run open` | `cypress open` | Cypress GUI(런처) 실행 |
-| `npm test` | `cypress run --browser chrome` | 전체 27개 headless 실행 |
-| `npm run test:electron` | `cypress run --browser electron` | 내장 Electron 폴백 실행 |
-| `npm run repeat` | `cypress-repeat run -n 3` | 3회 반복(불안정 테스트 점검) |
-| `npm run test:history` | `node shell/archive-report.mjs --run` | 전체 실행 + 결과를 히스토리로 보관 |
+| `npm test` | `cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | saucedemo 27개 headless 실행 |
+| `npm run test:electron` | `cypress run --browser electron --spec "cypress/e2e/saucedemo/**/*.cy.js"` | 내장 Electron 폴백 실행 |
+| `npm run repeat` | `cypress-repeat run -n 3 --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | 3회 반복(불안정 테스트 점검) |
+| `npm run test:history` | `node shell/archive-report.mjs --run --spec "cypress/e2e/saucedemo/**/*.cy.js"` | 실행 + 결과를 히스토리로 보관 |
 | `npm run report:summary` | `node shell/generate-summary.mjs` | mochawesome 결과 → 한국어 요약 |
 | `npm run report:archive` | `node shell/archive-report.mjs` | 직전 실행 리포트만 히스토리로 보관 |
 | `npm run docker:test` | `docker compose up cypress` | 컨테이너에서 실행 |

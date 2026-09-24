@@ -16,7 +16,7 @@ services:
             - MAIL_FROM=${MAIL_FROM:-}
             - MAIL_TO=${MAIL_TO:-}
             - ENVIRONMENT=Docker
-            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/**/*.cy.js}
+            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/saucedemo/**/*.cy.js}
         volumes:
             - .:/app
         working_dir: /app
@@ -41,7 +41,7 @@ services:
             - MAIL_FROM=${MAIL_FROM:-}
             - MAIL_TO=${MAIL_TO:-}
             - ENVIRONMENT=Docker-Dev
-            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/**/*.cy.js}
+            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/saucedemo/**/*.cy.js}
         volumes:
             - .:/app
         working_dir: /app
@@ -62,7 +62,7 @@ services:
             - MAIL_FROM=${MAIL_FROM:-}
             - MAIL_TO=${MAIL_TO:-}
             - ENVIRONMENT=Docker-Repeat
-            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/**/*.cy.js}
+            - SPEC_FILE=${SPEC_FILE:-cypress/e2e/saucedemo/**/*.cy.js}
             - REPEAT_COUNT=${REPEAT_COUNT:-3}
         volumes:
             - .:/app

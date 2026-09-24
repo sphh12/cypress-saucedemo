@@ -11,8 +11,33 @@
 - [ ] (선택) `Test.allTheThings() T-Shirt` 등 특수문자 slug 상품 케이스 추가
 - [ ] (선택) `cy.session` 기반 로그인 캐싱 도입 검토 (P10 — 동작 변경이라 별도 검토)
 - [ ] (선택) problem_user / performance_glitch_user 시나리오 스펙 추가
-- [ ] `npm test` 스코프 방침 결정 — `sample/`(대상 앱 미설정 플레이스홀더)·`example/`(Kitchen Sink 학습 예제) 때문에 전체 실행(20 스펙)이 항상
-  실패한다. `specPattern` 변경 / 해당 스펙 삭제 / 현상 유지 중 택일 (CI 는 `--spec` 으로 이미 우회함)
+
+## [2026-09-24]
+
+### Changed
+
+- **`npm test` 등 실행 스크립트의 기본 범위를 saucedemo 스위트로 한정** (Todo "`npm test` 스코프 방침 결정" 해소)
+  - 배경: `specPattern` 이 20 스펙 전체를 잡아, 대상 앱 미설정 스텁 `sample/` 2건 때문에 `npm test` 가 **항상 실패**했다.
+    "항상 실패"는 진짜 실패를 가린다.
+  - 결정: 세 선택지 중 **스크립트 한정**. `sample/` 은 README 의 `DomBasePage`·`IframeBasePage` 패턴 예시로 쓰여 삭제하면 문서가 깨지고,
+    `specPattern` 을 좁히면 `--spec sample` 로 명시 실행하는 경로까지 막힌다.
+  - `test`·`test:chrome`·`test:electron`·`repeat`·`test:history` 에 `--spec "cypress/e2e/saucedemo/**/*.cy.js"` 추가 (CI 와 동일 범위).
+    docker 3개 서비스의 `SPEC_FILE` 기본값도 같은 값으로 변경.
+  - 덮어쓰기: `npm test -- --spec "경로"` — Cypress 는 **마지막 `--spec` 을 채택**함을 실측 확인.
+  - Windows `cmd.exe` 호환을 위해 글롭은 큰따옴표로 감쌌다.
+- 문서 동기화: README·`Setup-Guide`·`Shell-Scripts-Guide`·`cypress_shortKey`·`ci-guide` 의 스크립트 표와 설명.
+
+### Fixed
+
+- **`cypress_shortKey.md` 반복 실행 예시 오류**: `SPEC_FILE=… REPEAT_COUNT=5 npm run repeat` 로 안내했지만 로컬 `repeat` 스크립트는
+  두 변수를 읽지 않는다(Docker 용 `shell/run-repeat.sh` 전용). 로컬은 `npm run repeat -- --spec`, 횟수 변경은 `npx cypress-repeat run -n N`,
+  환경변수 방식은 `npm run docker:repeat` 으로 구분해 고쳤다.
+
+### 검증
+
+- `npm test` → 7 스펙 / 27 테스트 전부 통과 · `npm test -- --spec sample.dom` → 1 스펙만 선택
+- `npm run repeat -- --spec cart` → cart 3회 통과 · `npm run test:history -- --spec cart` → `_pass` 폴더 보관
+- docker 는 로컬 미설치라 실행 미검증 (YAML 기본값 치환만 확인)
 
 ## [2026-08-28]
 

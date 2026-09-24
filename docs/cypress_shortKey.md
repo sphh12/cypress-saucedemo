@@ -11,7 +11,7 @@
 | 명령어 | 설명 |
 |---|---|
 | `npm run open` | GUI(Test Runner) 모드로 열기 — 테스트 선택·실시간 확인 |
-| `npm run test` | 전체 spec **헤드리스** 실행 |
+| `npm run test` | saucedemo 스위트 **헤드리스** 실행 (다른 spec 은 `-- --spec "경로"`) |
 | `npm run test:chrome` | Chrome 브라우저로 헤드리스 실행 |
 | `npm run repeat` | spec을 N회 반복 실행 (간헐 실패 검증) |
 | `npm run report:summary` | mochawesome JSON → 한국어 요약 텍스트 생성 |
@@ -23,7 +23,7 @@
 # 예시: GUI 모드로 열어서 테스트 골라 실행
 npm run open
 
-# 예시: 전체를 Chrome 헤드리스로 실행
+# 예시: saucedemo 스위트를 Chrome 헤드리스로 실행
 npm run test:chrome
 ```
 
@@ -32,22 +32,25 @@ npm run test:chrome
 ## 2. 반복 실행 (간헐 실패 검증)
 
 간헐적으로 실패하는 테스트를 N회 연속 돌려 안정성을 확인할 때 사용한다.
-대상 spec은 환경변수 `SPEC_FILE`, 반복 횟수는 `REPEAT_COUNT`로 지정한다.
+로컬 `npm run repeat` 은 saucedemo 스위트를 **3회** 반복한다. 대상 spec 은 `-- --spec` 으로 바꾼다.
+(`SPEC_FILE`·`REPEAT_COUNT` 환경변수는 Docker 용 `shell/run-repeat.sh` 만 읽는다 — 로컬 `npm run repeat` 에는 적용되지 않는다)
 
 ```bash
-# 기본: SPEC_FILE 전체를 REPEAT_COUNT(기본 3)회 반복
+# 기본: saucedemo 스위트를 3회 반복
 npm run repeat
+
+# 예시: 특정 spec 만 3회 반복 (OS 공통)
+npm run repeat -- --spec "cypress/e2e/saucedemo/cart.cy.js"
+
+# 예시: 반복 횟수까지 바꾸려면 cypress-repeat 을 직접 호출
+npx cypress-repeat run -n 5 --browser chrome --spec "cypress/e2e/saucedemo/cart.cy.js"
 ```
 
-- `REPEAT_COUNT` 생략 시 기본 **3회**
 - 앞 회차가 실패해도 멈추지 않고 지정 횟수를 끝까지 실행
 
 ```bash
-# 예시: 특정 spec을 5회 반복 (POSIX 셸 기준)
-SPEC_FILE="cypress/e2e/sample/sample.dom.cy.js" REPEAT_COUNT=5 npm run repeat
-
-# 예시 (PowerShell)
-$env:SPEC_FILE="cypress/e2e/sample/sample.dom.cy.js"; $env:REPEAT_COUNT="5"; npm run repeat
+# Docker 반복 실행 — 여기서는 SPEC_FILE / REPEAT_COUNT 가 적용된다 (기본: saucedemo 스위트 3회)
+SPEC_FILE="cypress/e2e/saucedemo/cart.cy.js" REPEAT_COUNT=5 npm run docker:repeat
 
 # Docker로 반복 실행
 npm run docker:repeat

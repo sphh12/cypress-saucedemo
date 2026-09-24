@@ -43,8 +43,9 @@ CI 는 `--spec` 으로 **saucedemo 스위트(7 스펙 / 27 테스트)만** 돌�
 | `cypress/e2e/sample/` | 대상 앱이 설정되지 않은 플레이스홀더 스텁 — **로컬에서도 실패한다** | ❌ |
 | `cypress/e2e/example/` | example.cypress.io 를 치는 Kitchen Sink 학습 예제 (외부 사이트) | ❌ |
 
-> `npm test` 는 여전히 20 스펙 전체를 돌리므로 sample 2건이 실패한다.
-> 로컬에서 실제 스위트만 확인하려면 `npx cypress run --spec "cypress/e2e/saucedemo/**/*.cy.js"` 를 쓴다.
+> 로컬 npm 스크립트(`test`·`test:chrome`·`test:electron`·`repeat`·`test:history`)와 docker 기본값(`SPEC_FILE`)도
+> 2026-09-24 부터 CI 와 같은 saucedemo 스위트로 한정했다. sample·example 은 `npm test -- --spec "경로"` 로 명시해서 돌린다.
+> (`npx cypress run` 처럼 `--spec` 없이 직접 호출하면 여전히 20 스펙 전체가 잡힌다)
 
 ### 왜 이런 순서인가
 

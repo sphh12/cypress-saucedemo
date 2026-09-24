@@ -3,7 +3,7 @@
 `shell/` 폴더의 스크립트 파일 용도와 호출 관계를 정리한 문서입니다.
 
 > 이 파이프라인(메일 발송 + HTML 리포트)은 **선택 사항**입니다.
-> 로컬에서는 `npm test`(= `npx cypress run`)만으로 충분히 테스트를 돌릴 수 있고,
+> 로컬에서는 `npm test`(= `npx cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"`)만으로 충분히 테스트를 돌릴 수 있고,
 > Docker로 실행하거나 결과를 메일/리포트로 받고 싶을 때만 아래 스크립트를 사용합니다.
 
 ---
@@ -170,10 +170,10 @@ package.json
 
 | npm 스크립트 | 명령 | 관련 shell |
 |--------------|------|-----------|
-| `npm test` | `cypress run` | (shell 불필요) |
-| `npm run test:chrome` | `cypress run --browser chrome` | (shell 불필요) |
-| `npm run repeat` | `cypress-repeat run -n 3` | (shell 불필요) |
-| `npm run test:history` | `node shell/archive-report.mjs --run` | `archive-report.mjs` |
+| `npm test` | `cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | (shell 불필요) |
+| `npm run test:chrome` | `cypress run --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | (shell 불필요) |
+| `npm run repeat` | `cypress-repeat run -n 3 --browser chrome --spec "cypress/e2e/saucedemo/**/*.cy.js"` | (shell 불필요) |
+| `npm run test:history` | `node shell/archive-report.mjs --run --spec "cypress/e2e/saucedemo/**/*.cy.js"` | `archive-report.mjs` |
 | `npm run report:summary` | `node shell/generate-summary.mjs` | `generate-summary.mjs` |
 | `npm run report:archive` | `node shell/archive-report.mjs` | `archive-report.mjs` |
 | `npm run docker:test` | `docker compose up cypress` | `run-test.sh` |
